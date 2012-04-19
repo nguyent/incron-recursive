@@ -4,6 +4,7 @@ incron-recursive
 Recursive monitoring with incron, for newly created subdirectories in a parent folder.
 
 My incrontab entry looks something like this: 
+
 /var/www/examplesite/projects IN_CREATE,IN_DELETE /var/www/soundtrack/output.py $# $@ $%
 
 This script will monitor a parent directory, and look for whether a sub-directory has been 
