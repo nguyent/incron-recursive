@@ -23,7 +23,7 @@ os.setuid(pwd.getpwnam(curUser)[2])
 # Log to a timestamped log file
 def log(out, err):
     curTime = datetime.time(datetime.now()).isoformat()
-    f = open(workingDir + '/error.log' + curTime)
+    f = open(workingDir + '/error.log' + curTime, 'w')
     f.write('Could not update incrontab for %s' % changedDir + '\n')
     f.write('Failed output: \n')
     f.write(out + '\n')
