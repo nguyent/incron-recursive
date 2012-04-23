@@ -53,18 +53,20 @@ def main():
 
     # A Sub-Directory is added.
     if 'IN_CREATE,IN_ISDIR' in event:
-        cmds = ["echo '%s IN_CREATE %s $# $@ $%%' >> %s" % (workingDir+'/'+changedDir, scriptPath, incrontemp)]
+        cmds = ["echo '%s IN_CREATE,IN_DELETE,IN_MODIFY %s $# $@ $%%' >> %s" % (workingDir+'/'+changedDir, scriptPath, incrontemp)]
+        processCmd(cmds)
 
     # A Sub-Directory is deleted.
     elif 'IN_DELETE,IN_ISDIR' in event:
         cmds = ["sed -i '/%s/d' %s" % (changedDir.strip('/'), incrontemp)]
-
-    # A File is added.
-    elif 'IN_CREATE':
+        processCmd(cmds)
+    
+    # A File is added... 
+    # We may need to watch when files are moved to the watched directory as well.
+    elif 'IN_CREATE' in event or 'IN_MODIFY' in event:
         processFile()
         sys.exit()
 
-    processCmd(cmds)
 
 if __name__ == "__main__":
     main()
