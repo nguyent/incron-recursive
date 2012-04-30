@@ -133,7 +133,7 @@ def main():
 
     # A file was renamed.
     elif 'IN_MOVED_TO' in event:
-        changed = ''.join(sys.argv[1].split('.')[:-1]) # remove the extension
+        ch = ''.join(sys.argv[1].split('.')[:-1]) # remove the extension
         wd = workingDir.replace('\\ ', ' ')
         altFolder = wd + '/.alternates/'
         files = os.walk(altFolder).next()[2]
@@ -146,8 +146,8 @@ def main():
                 break
 
         try:
-            os.rename(altFolder + moved + '_ffox.webm',altFolder + changed + '_ffox.webm')
-            os.rename(altFolder + moved + '_ipad.mov',altFolder + changed + '_ipad.mov')
+            os.rename(altFolder + moved + '_ffox.webm',altFolder + ch + '_ffox.webm')
+            os.rename(altFolder + moved + '_ipad.mov',altFolder + ch + '_ipad.mov')
 
         # If we can't rename the files, so either one of these happened:
         # 1 - Only one of the alternates was created, in which case we still
