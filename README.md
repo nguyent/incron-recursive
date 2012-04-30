@@ -1,18 +1,23 @@
 incron-recursive
 ================
 
-Recursive monitoring with incron, for newly created subdirectories in a parent folder.
+What this script does:
+  - Recursive monitoring with incron, for newly created subdirectories in a parent folder.
+  - Adds new watches to incrontab for newly created folders
+  - Updates incrontab when files/folders are arbitrarily renamed/removed [including folders with spaces]
+  - Add a .alternates folder to every newly created folder under the parent folder. 
+  - On IN_CREATE events [files are added], HandBrakeCLI & ffmpeg are called to create
 
 My incrontab entry looks something like this: 
 
-/var/www/examplesite/projects IN_CREATE,IN_DELETE /var/www/examplesite/update.py $# $@ $%
+/var/www/examplesite/projects IN_CREATE,IN_DELETE,IN_CLOSE_WRITE,IN_MOVED_TO /var/www/examplesite/update.py $# $@ $%
 
-This script will monitor a parent directory, and look for whether a sub-directory has been 
-added/removed and update incrontab to add a watch on the new sub-dir.
+If you want to use this script: 
+  - Change the variables scriptPath/curUser
+  - chmod +x the script
+  - Write access the watched folder.
 
-The idea for this script is to monitor a root folder where several other folders/files will be created, [in my case, video files], and run the appropriate actions on them. I've provided a barebones set up that will add/remove watches to incrontab, leaving the processFile function empty. 
-
-If you want to use this script, be sure to change the variables scriptPath/curUser, chmod +x the script, and ensure you're able to write to the watched folder.
+The use case for this script is to monitor uploaded video files to a (watched) directory, and encode them to a webm and iPad format, for mobile viewing/HTML5 playback in Firefox. 
 
 Cheers,
 Thang
