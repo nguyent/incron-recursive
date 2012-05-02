@@ -68,8 +68,8 @@ def processFile():
     out_file = workingDir+'/.alternates/' + out_file
 
     # Make an iOS & Firefox playable version.
-    cmds = ["HandBrakeCLI -i %s -o %s --preset=\"iPad\"" % ( in_file, out_file + '_ipad.mov' )]
-    cmds += ["ffmpeg -y -i %s -threads 4 -f webm -vcodec libvpx  -deinterlace -g 120 -level 216 -profile 0 -qmax 42 -qmin 10 -rc_buf_aggressivity 0.95 -vb 2M -acodec libvorbis -aq 70 -ac 2 %s" % (in_file, out_file + '_ffox.webm' )]
+    cmds = ["ffmpeg -y -i %s -threads 4 -f webm -vcodec libvpx  -filter:v yadif -g 120 -level 216 -profile 0 -qmax 42 -qmin 10 -rc_buf_aggressivity 0.95 -vb 2M -acodec libvorbis -aq 70 -ac 2 %s" % (in_file, out_file + '_ffox.webm' )]
+    cmds += ["HandBrakeCLI -i %s -o %s --preset=\"iPad\"" % ( in_file, out_file + '_ipad.mov' )]
     runCmd(cmds)
 
 def main():
